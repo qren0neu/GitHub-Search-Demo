@@ -173,3 +173,59 @@ fun UserProfileView(
         }
     }
 }
+
+@Composable
+fun GitHubUserSimpleView(
+    user: GitHubUser,
+    modifier: Modifier = Modifier,
+    onShowFullProfile: () -> Unit = {}
+) {
+    Card(
+        modifier = modifier.fillMaxWidth()
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            // Avatar
+            Surface(
+                modifier = Modifier
+                    .size(60.dp),
+                shape = RoundedCornerShape(30.dp)
+            ) {
+                AsyncImage(
+                    model = user.avatar_url,
+                    contentDescription = "${user.login}'s avatar",
+                    modifier = Modifier.fillMaxSize()
+                )
+            }
+            
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(horizontal = 16.dp)
+            ) {
+                // Username
+                Text(
+                    text = "@${user.login}",
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.primary
+                )
+                
+                // Name if available
+                user.name?.let {
+                    Text(
+                        text = it,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                }
+            }
+            
+            Button(onClick = { onShowFullProfile() }) {
+                Text("View Profile")
+            }
+        }
+    }
+}

@@ -47,6 +47,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.qiren.github_search_demo.ui.components.GitHubUserSimpleView
 import com.qiren.github_search_demo.ui.components.SearchBar
 import com.qiren.github_search_demo.ui.components.UserListEmptyView
 import com.qiren.github_search_demo.ui.components.UserNotFoundView
@@ -171,23 +172,25 @@ fun GithubUserProfileScreen(
                     ) {
                         if (following.isNotEmpty()) {
                             items(following) { user ->
-                                UserProfileView(
+                                GitHubUserSimpleView(
                                     user = user,
                                     modifier = Modifier.fillMaxWidth(),
-                                    onFollowersClick = { clickFollowers(user.login) },
-                                    onFollowingClick = { clickFollowing(user.login) },
-                                    onOpenUrl = { openUrl(it) }
+                                    onShowFullProfile = {
+                                        searchQuery.value = user.login
+                                        viewModel.searchUser(user.login)
+                                    }
                                 )
                             }
                         }
                         if (followers.isNotEmpty()) {
                             items(followers) { user ->
-                                UserProfileView(
+                                GitHubUserSimpleView(
                                     user = user,
                                     modifier = Modifier.fillMaxWidth(),
-                                    onFollowersClick = { clickFollowers(user.login) },
-                                    onFollowingClick = { clickFollowing(user.login) },
-                                    onOpenUrl = { openUrl(it) }
+                                    onShowFullProfile = {
+                                        searchQuery.value = user.login
+                                        viewModel.searchUser(user.login)
+                                    }
                                 )
                             }
                         }

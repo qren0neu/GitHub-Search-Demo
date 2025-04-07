@@ -95,13 +95,13 @@ open class GithubSearchViewModel : ViewModel() {
         when {
             username.startsWith("#follower@") -> {
                 val targetUsername = username.substringAfter("@")
-                addToSearchHistory(username, isFollowersQuery = true)
+                if (saveHistory) addToSearchHistory(username, isFollowersQuery = true)
                 fetchUserFollowers(targetUsername)
                 return
             }
             username.startsWith("#following@") -> {
                 val targetUsername = username.substringAfter("@")
-                addToSearchHistory(username, isFollowingQuery = true)
+                if (saveHistory) addToSearchHistory(username, isFollowingQuery = true)
                 fetchUserFollowing(targetUsername)
                 return
             }
